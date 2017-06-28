@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ elixir('css/gulp.css') }}">
+    <script type="text/" defer src="{{ elixir('js/gulp.js') }}"></script>
+</head>
+<body>
+
+
+<section id="header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<a href="/"><img src="/images/bymeds_logo.png" alt="logo bymeds" /></a>
+				<div id="btn_menu" class="active">
+					<div class="bar top"></div>
+					<div class="bar middle"></div>
+					<div class="bar bottom"></div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+				<ul>
+          @if (Auth::guest())
+              <li><a href="{{ route('login') }}">Login</a></li>
+              <li><a href="{{ route('register') }}">Register</a></li>
+          @else
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                      {{ Auth::user()->name }} <span class="caret"></span>
+                  </a>
+
+                  <ul class="dropdown-menu" role="menu">
+                      <li>
+                          <a href="{{ route('logout') }}"
+                              onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                              Logout
+                          </a>
+
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                              {{ csrf_field() }}
+                          </form>
+                      </li>
+                  </ul>
+              </li>
+          @endif
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="dash">
+  <div class="container">
+    <div class="row">
+        @yield('content')
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
